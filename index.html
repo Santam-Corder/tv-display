@@ -530,6 +530,129 @@
             font-size: 0.75rem;
         }
         
+        /* Calendar Section Styles */
+        .calendar-section {
+            margin-top: 30px;
+        }
+        
+        .calendar-container {
+            margin-top: 20px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-title {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav-btn {
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-nav-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            padding: 5px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1/1;
+            border-radius: 5px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 5px;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .calendar-day:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .day-submissions {
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .submission-item {
+            font-size: 0.7rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 2px;
+            margin-bottom: 2px;
+            border-radius: 3px;
+        }
+        
+        .submission-item.urgent {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .submission-item.warning {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .submission-item.completed {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+        }
+        
+        .today {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .other-month {
+            opacity: 0.5;
+            background-color: var(--light-gray);
+        }
+        
         /* Responsive styles */
         @media (max-width: 992px) {
             .dashboard-container {
@@ -543,6 +666,10 @@
             
             .projects-grid, .team-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .calendar-grid, .calendar-weekdays {
+                grid-template-columns: repeat(7, 1fr);
             }
         }
         
@@ -562,6 +689,14 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .calendar-weekday {
+                font-size: 0.8rem;
+            }
+            
+            .day-number {
+                font-size: 0.9rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -571,6 +706,19 @@
             
             .projects-grid, .team-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .calendar-weekday {
+                font-size: 0.7rem;
+                padding: 2px;
+            }
+            
+            .day-number {
+                font-size: 0.8rem;
+            }
+            
+            .submission-item {
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -584,8 +732,8 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-project-diagram"></i> Projects</a></li>
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="#projects-section"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="#calendar-section"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
                 <li><a href="#team-section"><i class="fas fa-users"></i> Team</a></li>
                 <li><a href="#"><i class="fas fa-file-contract"></i> Contracts</a></li>
                 <li><a href="#"><i class="fas fa-chart-pie"></i> Reports</a></li>
@@ -599,7 +747,7 @@
             <div class="header">
                 <h1>BIDS AND SUBMISSION DASHBOARD</h1>
                 <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Sdmin+Sser&background=3498db&color=fff" alt="User">
+                    <img src="https://ui-avatars.com/api/?name=Santam+Sharma&background=3498db&color=fff" alt="User">
                     <span>Santam Sharma</span>
                 </div>
             </div>
@@ -651,7 +799,7 @@
             </div>
             
             <!-- Projects Section -->
-            <div class="dashboard-section">
+            <div class="dashboard-section" id="projects-section">
                 <div class="section-header">
                     <h2>Current Projects</h2>
                     <div class="filter-controls">
@@ -664,6 +812,36 @@
                 
                 <div class="projects-grid" id="projects-container">
                     <!-- Projects will be added dynamically by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Calendar Section -->
+            <div class="dashboard-section calendar-section" id="calendar-section">
+                <div class="section-header">
+                    <h2>Submission Calendar</h2>
+                    <div class="calendar-header">
+                        <div class="calendar-title" id="calendar-month-year">July 2025</div>
+                        <div class="calendar-nav">
+                            <button class="calendar-nav-btn" id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                            <button class="calendar-nav-btn" id="next-month"><i class="fas fa-chevron-right"></i></button>
+                            <button class="calendar-nav-btn" id="current-month">Today</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calendar-container">
+                    <div class="calendar-weekdays">
+                        <div class="calendar-weekday">Sun</div>
+                        <div class="calendar-weekday">Mon</div>
+                        <div class="calendar-weekday">Tue</div>
+                        <div class="calendar-weekday">Wed</div>
+                        <div class="calendar-weekday">Thu</div>
+                        <div class="calendar-weekday">Fri</div>
+                        <div class="calendar-weekday">Sat</div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-days">
+                        <!-- Calendar days will be added dynamically by JavaScript -->
+                    </div>
                 </div>
             </div>
             
@@ -688,56 +866,56 @@
                 name: "Amine Boukhris",
                 position: "Business Development Manager",
                 department: "Sales",
-                avatar: "https://ui-avatars.com/api/?name=Aales+B&background=3498db&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Amine+Boukhris&background=3498db&color=fff"
             },
             {
                 id: 2,
                 name: "Sama Lavala",
                 position: "Business Development Executive",
                 department: "Sales",
-                avatar: "https://ui-avatars.com/api/?name=Sales+L&background=3498db&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Sama+Lavala&background=3498db&color=fff"
             },
             {
                 id: 3,
                 name: "Afzal A. Rahiman",
                 position: "Head of Sales",
                 department: "Sales",
-                avatar: "https://ui-avatars.com/api/?name=Aales+R&background=3498db&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Afzal+Rahiman&background=3498db&color=fff"
             },
             {
                 id: 4,
                 name: "Santam Sharma",
                 position: "BID and Technical Administrator",
                 department: "Technical",
-                avatar: "https://ui-avatars.com/api/?name=Sales+A&background=3498db&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Santam+Sharma&background=3498db&color=fff"
             },
             {
                 id: 5,
                 name: "Astrid Dalgado",
                 position: "BID Manager",
                 department: "Technical",
-                avatar: "https://ui-avatars.com/api/?name=AM+Dept&background=2ecc71&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Astrid+Dalgado&background=2ecc71&color=fff"
             },
- {
+            {
                 id: 6,
                 name: "Assel Bader",
                 position: "Commercial Asst. Manager",
                 department: "Commercial",
-                avatar: "https://ui-avatars.com/api/?name=AM+Bept&background=2ecc71&color=fff"
-            },
-{
-                id: 8,
-                name: "Rafia Rahat",
-                position: "Bid Administrator",
-                department: "Technical",
-                avatar: "https://ui-avatars.com/api/?name=RM+Rept&background=2ecc71&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Assel+Bader&background=2ecc71&color=fff"
             },
             {
                 id: 7,
                 name: "Monica Demaculigan",
                 position: "Commercial Executive",
                 department: "Commercial",
-                avatar: "https://ui-avatars.com/api/?name=Mleaning+Div&background=e74c3c&color=fff"
+                avatar: "https://ui-avatars.com/api/?name=Monica+Demaculigan&background=e74c3c&color=fff"
+            },
+            {
+                id: 8,
+                name: "Rafia Rahat",
+                position: "Bid Administrator",
+                department: "Technical",
+                avatar: "https://ui-avatars.com/api/?name=Rafia+Rahat&background=2ecc71&color=fff"
             }
         ];
 
@@ -754,7 +932,7 @@
                 startDate: "July 7, 2025",
                 progress: 10,
                 timeline: "2pm",
-                team: [1, 4, 6] // Using team member IDs
+                team: [1, 4, 6]
             },
             {
                 id: 2,
@@ -767,7 +945,7 @@
                 startDate: "July 03, 2025",
                 progress: 30,
                 timeline: "",
-                team: [2,4] // Technical Round
+                team: [2, 4]
             },
             {
                 id: 3,
@@ -780,7 +958,7 @@
                 startDate: "July 11, 2025",
                 progress: 10,
                 timeline: "",
-                team: [3, 6] // Commercial, Cleaning Division
+                team: [3, 6]
             },
             {
                 id: 4,
@@ -793,7 +971,7 @@
                 startDate: "June 10, 2025",
                 progress: 20,
                 timeline: "",
-                team: [3, 7,5] // Commercial, Technical
+                team: [3, 7, 5]
             },
             {
                 id: 5,
@@ -806,7 +984,7 @@
                 startDate: "July 09, 2025",
                 progress: 55,
                 timeline: "",
-                team: [5, 4] // DXB Operations, Sales
+                team: [5, 4]
             },
             {
                 id: 6,
@@ -819,7 +997,7 @@
                 startDate: "July 07, 2025",
                 progress: 20,
                 timeline: "",
-                team: [4,6] // Cleaning Operation
+                team: [4, 6]
             },
             {
                 id: 7,
@@ -832,7 +1010,7 @@
                 startDate: "June 12, 2025",
                 progress: 100,
                 timeline: "",
-                team: [3, 4, 5] // Commercial, Technical, Sales, IFM
+                team: [3, 4, 5]
             },
             {
                 id: 8,
@@ -845,7 +1023,7 @@
                 startDate: "June 19, 2025",
                 progress: 100,
                 timeline: "",
-                team: [3, 5] // Commercial, DXB Operations
+                team: [3, 5]
             },
             {
                 id: 9,
@@ -857,9 +1035,127 @@
                 startDate: "June 30, 2025",
                 progress: 100,
                 timeline: "",
-                team: [3, 5] // Commercial, DXB operations
+                team: [3, 5]
             }
         ];
+
+        // Calendar functionality
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        // Function to render calendar
+        function renderCalendar(month, year) {
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+            
+            // Set month and year in header
+            document.getElementById('calendar-month-year').textContent = 
+                new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            
+            // Get first day of month and total days in month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Get days from previous month to show
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            
+            // Get today's date for highlighting
+            const today = new Date();
+            const isCurrentMonth = month === today.getMonth() && year === today.getFullYear();
+            
+            // Create calendar days
+            let day = 1;
+            let nextMonthDay = 1;
+            
+            // Create 6 rows (weeks) to ensure we have enough space
+            for (let i = 0; i < 42; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                if (i < firstDay) {
+                    // Days from previous month
+                    const prevDay = prevMonthDays - firstDay + i + 1;
+                    dayElement.innerHTML = `<div class="day-number">${prevDay}</div>`;
+                    dayElement.classList.add('other-month');
+                } else if (day > daysInMonth) {
+                    // Days from next month
+                    dayElement.innerHTML = `<div class="day-number">${nextMonthDay}</div>`;
+                    dayElement.classList.add('other-month');
+                    nextMonthDay++;
+                } else {
+                    // Current month days
+                    dayElement.innerHTML = `<div class="day-number">${day}</div>`;
+                    
+                    // Highlight today
+                    if (isCurrentMonth && day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // Add submissions for this day
+                    const submissions = getSubmissionsForDay(day, month, year);
+                    if (submissions.length > 0) {
+                        const submissionsContainer = document.createElement('div');
+                        submissionsContainer.className = 'day-submissions';
+                        
+                        submissions.forEach(sub => {
+                            const subElement = document.createElement('div');
+                            subElement.className = `submission-item ${sub.status}`;
+                            subElement.textContent = sub.title;
+                            subElement.title = `${sub.title} (Due: ${sub.time})`;
+                            submissionsContainer.appendChild(subElement);
+                        });
+                        
+                        dayElement.appendChild(submissionsContainer);
+                    }
+                    
+                    day++;
+                }
+                
+                calendarDays.appendChild(dayElement);
+            }
+        }
+        
+        // Function to get submissions for a specific day
+        function getSubmissionsForDay(day, month, year) {
+            const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            
+            return projects
+                .filter(project => project.deadline === dateStr)
+                .map(project => ({
+                    title: project.title,
+                    time: project.deadlineTime ? formatTimeForDisplay(project.deadlineTime) : 'EOD',
+                    status: project.status === 'completed' ? 'completed' : 
+                           (new Date(dateStr) < new Date() ? 'urgent' : 'warning')
+                }));
+        }
+        
+        // Function to navigate to previous month
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+        
+        // Function to navigate to next month
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+        
+        // Function to navigate to current month
+        function goToCurrentMonth() {
+            const today = new Date();
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            renderCalendar(currentMonth, currentYear);
+        }
 
         // Function to get team member by ID
         function getTeamMember(id) {
@@ -1189,9 +1485,20 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            // Set initial calendar to July 2025 (as per the project deadlines)
+            currentMonth = 6; // July (0-indexed)
+            currentYear = 2025;
+            
             renderProjects();
             renderTeam();
+            renderCalendar(currentMonth, currentYear);
             updateClock();
+            
+            // Set up calendar navigation
+            document.getElementById('prev-month').addEventListener('click', prevMonth);
+            document.getElementById('next-month').addEventListener('click', nextMonth);
+            document.getElementById('current-month').addEventListener('click', goToCurrentMonth);
+            
             setInterval(updateClock, 1000);
         });
     </script>
